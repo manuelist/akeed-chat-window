@@ -7,10 +7,7 @@ import Footer from './Footer';
 import logoURL from './assets/img/logo@2x.png';
 import './assets/styles';
 
-
-
 class App extends Component {
-
   constructor() {
     super();
     this.state = {
