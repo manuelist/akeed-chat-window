@@ -1,6 +1,6 @@
 .sc-header {
   background: #cb528a;
-  min-height: 75px;
+  min-height: 60px;
   border-top-left-radius: 9px;
   border-top-right-radius: 9px;
   color: white;
@@ -11,19 +11,80 @@
   display: flex;
 }
 
-.sc-header--img {
-  border-radius: 50%;
-  align-self: center;
-  padding: 10px;
+.sc-akeed-care-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
-.sc-header--team-name {
+.sc-chat-logo-con {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  width: 60px;
+  height: 60px;
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 0;
+  position: absolute;
+  box-shadow: 0 0 10px rgba(0,0,0,.4); 
+}
+
+.sc-chat-inline {
+  display: inline-block;
+  vertical-align: text-top;
+  position: relative;
+}
+
+.sc-status-text {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: small;
+}
+
+.sc-status-online {
+  background-color: #5cb85c;
+  width: 10px;
+  height: 10px;
+  line-height: 5px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.sc-team-name {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* .sc-header--img {
+  border-radius: 50%;
+  align-self: center;
+  width: 60px;
+  height: 60px;
+  background-size: 35px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 0;
+  position: absolute;
+  box-shadow: 0 0 10px rgba(0,0,0,.4);
+} */
+
+/* .sc-header--team-name {
   align-self: center;
   padding: 10px;
   flex: 1;
   user-select: none;
   border-radius: 5px;
-}
+} */
 
 .sc-header--close-button {
   width: 40px;

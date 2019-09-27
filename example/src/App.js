@@ -66,7 +66,7 @@ class App extends Component {
       <AkeedCare
         agentProfile={{
           teamName: 'AkeedCare',
-          imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+          imageUrl: 'https://dsx9kbtamfpyb.cloudfront.net/desktop-web/build/images/logo/logo-icon-colored.png'
         }}
         onMessageWasSent={this._onMessageWasSent.bind(this)}
         onFilesSelected={this._onFilesSelected.bind(this)}
