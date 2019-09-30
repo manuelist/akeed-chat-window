@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import ChatWindow from "./ChatWindow";
 
-import launcherIcon from "./../assets/logo-no-bg.svg";
-import launcherIconActive from "./../assets/close-icon.png";
+import chatIcon from "./../assets/akeedcare.svg";
 
 const AkeedCare = props => {
   const [state, setState] = useState({
@@ -30,8 +29,11 @@ const AkeedCare = props => {
         className={classList.join(" ")}
         onClick={handleClick}
       >
-        <img className={"sc-open-icon"} src={launcherIconActive} />
-        <img className={"sc-closed-icon"} src={launcherIcon} />
+        <div className="sc-chat-button">
+          <img className="sc-chat-image" src={chatIcon} />
+          {' '}
+          AkeedCare
+        </div>
       </div>
       <ChatWindow
         messageList={props.messageList}

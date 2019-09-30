@@ -33,7 +33,7 @@ const UserInput = props => {
         type: "text",
         data: { text }
       });
-      userInput.innerHTML = "";
+      userInput.current.innerHTML = "";
     }
   };
 

@@ -1,4 +1,3 @@
-import './emojiPicker.css';
 import './chat-window.css';
 import './launcher.css';
 import './header.css';

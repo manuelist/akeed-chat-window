@@ -1,85 +1,119 @@
-import React, {Component} from 'react';
-import { AkeedCare } from 'akeed-care';
-import messageHistory from './messageHistory';
-import TestArea from './TestArea';
-import Header from './Header';
-import Footer from './Footer';
-import logoURL from './assets/img/logo@2x.png';
-import './assets/styles';
+import React, { useState, useEffect } from "react";
+import { AkeedCare } from "akeed-care";
+import socketIOClient from "socket.io-client";
+import TestArea from "./TestArea";
+import Header from "./Header";
+import Footer from "./Footer";
+import logoURL from "./assets/img/logo@2x.png";
+import "./assets/styles";
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      messageList: messageHistory,
-      newMessagesCount: 0,
-      isOpen: false
+const App = () => {
+  const [socket, setSocket] = useState(null);
+  const [messageList, setMessage] = useState([]);
+  const [state, setState] = useState({
+    newMessagesCount: 0,
+    isOpen: false
+  });
+
+  useEffect(() => {
+    initSocket();
+  }, []);
+
+  const initSocket = () => {
+    const socket = socketIOClient("https://staging.flyakeed.com:3030");
+    socket.emit(
+      "login",
+      {
+        token:
+          "RU5_UUnlTiLa2oNlLdUO_-ugSi5Z7WQNelE3CryCC-DCpRXMLWxe_spddWR9TSWv0sKzkbxlu58Ph6xoAp5kdw",
+        type: "user",
+        guest_token: null
+      },
+      data => {
+        setSocket(socket);
+        initMessageRecieved(socket);
+      }
+    );
+  };
+
+  const initMessageRecieved = (socketParams) => {
+    socketParams.on("chat_message", data => {
+      pushMessage(data);
+    });
+  };
+
+  const pushMessage = (data) => {
+    const { type, sender, message } = data;
+    const messageData = {
+      type: type,
+      author: sender.type === "user" ? "me" : "them",
+      data: { text: message }
     };
-  }
+    setMessage(preMessages => ([
+      ...preMessages,
+      messageData
+    ]));
+  };
 
-  _onMessageWasSent(message) {
-    this.setState({
-      messageList: [...this.state.messageList, message]
+  const _onMessageWasSent = message => {
+    const {
+      data: { text }
+    } = message;
+
+    socket.emit("message_support", {
+      message: text,
+      device: "desktop",
+      is_connected: true
     });
-  }
+  };
 
-  _onFilesSelected(fileList) {
+  const _onFilesSelected = fileList => {
     const objectURL = window.URL.createObjectURL(fileList[0]);
-    this.setState({
-      messageList: [...this.state.messageList, {
-        type: 'file', author: 'me',
-        data: {
-          url: objectURL,
-          fileName: fileList[0].name
+    setState({
+      ...state,
+      messageList: [
+        ...state.messageList,
+        {
+          type: "file",
+          author: "me",
+          data: {
+            url: objectURL,
+            fileName: fileList[0].name
+          }
         }
-      }]
+      ]
     });
-  }
+  };
 
-  _sendMessage(text) {
-    if (text.length > 0) {
-      const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1;
-      this.setState({
-        newMessagesCount: newMessagesCount,
-        messageList: [...this.state.messageList, {
-          author: 'them',
-          type: 'text',
-          data: { text }
-        }]
-      });
-    }
-  }
-
-  _handleClick() {
-    this.setState({
-      isOpen: !this.state.isOpen,
+  const _handleClick = () => {
+    setState({
+      ...state,
+      isOpen: !state.isOpen,
       newMessagesCount: 0
     });
-  }
+  };
 
-  render() {
-    return <div>
+  return (
+    <div>
       <Header />
-      <TestArea
-        onMessage={this._sendMessage.bind(this)}
-      />
+      <TestArea />
       <AkeedCare
         agentProfile={{
-          teamName: 'AkeedCare',
-          imageUrl: 'https://dsx9kbtamfpyb.cloudfront.net/desktop-web/build/images/logo/logo-icon-colored.png'
+          teamName: "AkeedCare",
+          imageUrl:
+            "https://dsx9kbtamfpyb.cloudfront.net/desktop-web/build/images/logo/logo-icon-colored.png"
         }}
-        onMessageWasSent={this._onMessageWasSent.bind(this)}
-        onFilesSelected={this._onFilesSelected.bind(this)}
-        messageList={this.state.messageList}
-        newMessagesCount={this.state.newMessagesCount}
-        handleClick={this._handleClick.bind(this)}
-        isOpen={this.state.isOpen}
-        showEmoji
+        onMessageWasSent={_onMessageWasSent}
+        onFilesSelected={_onFilesSelected}
+        messageList={messageList}
+        newMessagesCount={state.newMessagesCount}
+        handleClick={_handleClick}
+        isOpen={state.isOpen}
       />
       <img className="demo-monster-img" src={logoURL} />
       <Footer />
-    </div>;
-  }
-}
+    </div>
+  );
+};
 
 export default App;
