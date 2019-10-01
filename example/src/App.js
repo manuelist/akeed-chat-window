@@ -25,7 +25,7 @@ const App = () => {
       "login",
       {
         token:
-          "RU5_UUnlTiLa2oNlLdUO_-ugSi5Z7WQNelE3CryCC-DCpRXMLWxe_spddWR9TSWv0sKzkbxlu58Ph6xoAp5kdw",
+          "AoWYEIELu1ZfnF0HdYg5vocm7opZhRBTnOxxWAZ6wb0E-MSANEkrrF7u5aLkjfIH1oO_MEVkivsJQKAiozA61Q",
         type: "user",
         guest_token: null
       },
