@@ -16,6 +16,25 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.sc-message--image img {
+  width: 50%;
+  border-radius: 5px;
+  box-shadow: 0 0 2px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.sc-message--thumbnail {
+  cursor: pointer;
+}
+
+.sc-message--thumbnail:focus {
+  outline: none;
+}
+
+.sc-loader-icon {
+  margin-top: 10px;
+}
+
 .sc-chat-window.closed {
   opacity: 0;
   visibility: hidden;
@@ -28,6 +47,7 @@
   background-color: white;
   background-size: 100%;
   padding: 40px 0px;
+  scroll-behavior: smooth;
 }
 
 .sc-message--me {

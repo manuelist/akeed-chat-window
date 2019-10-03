@@ -43,6 +43,7 @@ const AkeedCare = props => {
         isOpen={isOpen}
         onClose={handleClick}
         showEmoji={props.showEmoji}
+        {...props}
       />
     </div>
   );
@@ -56,12 +57,10 @@ AkeedCare.propTypes = {
   handleClick: PropTypes.func,
   messageList: PropTypes.arrayOf(PropTypes.object),
   mute: PropTypes.bool,
-  showEmoji: PropTypes.bool
 };
 
 AkeedCare.defaultProps = {
   newMessagesCount: 0,
-  showEmoji: true
 };
 
 export default AkeedCare;

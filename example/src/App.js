@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AkeedCare } from "akeed-care";
+import _ from 'lodash';
 import socketIOClient from "socket.io-client";
 import TestArea from "./TestArea";
 import Header from "./Header";
@@ -7,12 +8,17 @@ import Footer from "./Footer";
 import logoURL from "./assets/img/logo@2x.png";
 import "./assets/styles";
 
+const endpoint = "https://staging.flyakeed.com:3030";
+const dummyToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJiMWYzY2JmOTIyZDE5YjQ4MTEyMGI4NmQ1OWM2ZWNhYjQ3YWEwYzZhYmQyY2M0ZTk5OWQyODMxNTk5YjRlOTViYzQ5Nzg3ZDJkYjA2YzM1Nzg0NmM3ZTU2NWM4MDg0MzE3YTM4ODVlOGY2NWMxMTFmYWY5NWUwN2NkYmEwNzJmZmFhNzM5MTIwZTRmMiIsImlhdCI6MTU3MDEwMzQ0OH0.crcfMGEWtxaX-AWB3LwJ7J66Q9BTCU12folaMSCupYY";
+const imageToken = "OkOFL3HoCOepVCHBTVHq15k4MGsQe3gZymxRB7LamhYJcnsXzKM4AkPJaG_5pHbGnF29UlXsGDguYg_dR-WM2A";
+
 const App = () => {
   const [socket, setSocket] = useState(null);
+  const [isOpen, setOpen] = useState(false);
   const [messageList, setMessage] = useState([]);
   const [state, setState] = useState({
     newMessagesCount: 0,
-    isOpen: false
+    isConnected: false
   });
 
   useEffect(() => {
@@ -20,24 +26,44 @@ const App = () => {
   }, []);
 
   const initSocket = () => {
-    const socket = socketIOClient("https://staging.flyakeed.com:3030");
+    const socket = socketIOClient(endpoint);
     socket.emit(
-      "login",
+      "login::corp",
       {
-        token:
-          "AoWYEIELu1ZfnF0HdYg5vocm7opZhRBTnOxxWAZ6wb0E-MSANEkrrF7u5aLkjfIH1oO_MEVkivsJQKAiozA61Q",
-        type: "user",
-        guest_token: null
+        token: dummyToken
       },
       data => {
         setSocket(socket);
-        initMessageRecieved(socket);
+        fetchPreviousMessages();
+        initMessageReceived(socket);
       }
     );
   };
 
-  const initMessageRecieved = (socketParams) => {
+  const fetchPreviousMessages = async () => {
+    try {
+      const response = await fetch(`${endpoint}/api/messages/corp?offset=0`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorize: dummyToken
+        }
+      });
+      const json = await response.json();
+      const { error, data } = json;
+      const list = error ? [] : arrangeMessage(data.messages);
+      setState({ ...state, isConnected: true });
+      setMessage(list);
+    } catch (error) {
+      setMessage([]);
+      setState({ ...state, isConnected: true });
+      console.error("Error:", error);
+    }
+  };
+
+  const initMessageReceived = (socketParams) => {
     socketParams.on("chat_message", data => {
+      console.log(data);
       pushMessage(data);
     });
   };
@@ -46,7 +72,7 @@ const App = () => {
     const { type, sender, message } = data;
     const messageData = {
       type: type,
-      author: sender.type === "user" ? "me" : "them",
+      author: sender.type === "corp_admin" ? "me" : "them",
       data: { text: message }
     };
     setMessage(preMessages => ([
@@ -54,6 +80,24 @@ const App = () => {
       messageData
     ]));
   };
+
+  const arrangeMessage = (list) => {
+    const data = [];
+    _.forEach(list, (prop) => {
+      const { type, sender, message, thumbnail } = prop;
+      data.push({
+        type,
+        author: sender.type === "corp_admin" ? "me" : "them",
+        data: {
+          text: message,
+          imageUrl: `${endpoint}/api${message}?token=${imageToken}`,
+          thumbnail: `${endpoint}/api${thumbnail}?token=${imageToken}`
+        }
+      });
+    })
+
+    return data;
+  }
 
   const _onMessageWasSent = message => {
     const {
@@ -86,13 +130,9 @@ const App = () => {
   };
 
   const _handleClick = () => {
-    setState({
-      ...state,
-      isOpen: !state.isOpen,
-      newMessagesCount: 0
-    });
+    setOpen(!isOpen);
   };
-
+  console.log(isOpen);
   return (
     <div>
       <Header />
@@ -108,7 +148,8 @@ const App = () => {
         messageList={messageList}
         newMessagesCount={state.newMessagesCount}
         handleClick={_handleClick}
-        isOpen={state.isOpen}
+        isOpen={isOpen}
+        isConnected={state.isConnected}
       />
       <img className="demo-monster-img" src={logoURL} />
       <Footer />

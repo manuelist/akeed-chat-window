@@ -5,8 +5,9 @@ const MessageList = (props) => {
   const scrollList = useRef(null);
   useEffect(() => {
     // this.scrollList.scrollTop = this.scrollList.scrollHeight;
+    console.log(scrollList.current.scrollHeight);
     scrollList.current.scrollTop = scrollList.current.scrollHeight;
-  }, [scrollList]);
+  });
 
   return (
     <div className="sc-message-list" ref={scrollList}>
