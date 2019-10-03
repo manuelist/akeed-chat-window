@@ -1,6 +1,6 @@
 {
-  "name": "akeed-chat-window",
-  "version": "1.0.3",
+  "name": "@flyakeed/akeed-chat-window",
+  "version": "1.0.5",
   "description": "Chat Window Component",
   "author": "manuelist",
   "license": "MIT",
@@ -61,5 +61,8 @@
   "dependencies": {
     "react-images-viewer": "^1.6.2",
     "react-linkify": "^1.0.0-alpha"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
