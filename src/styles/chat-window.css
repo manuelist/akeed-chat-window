@@ -1,3 +1,4 @@
+
 .sc-chat-window {
   width: 370px;
   height: calc(100% - 120px);
@@ -16,8 +17,8 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.sc-message--image img {
-  width: 50%;
+.sc-message--thumbnail img {
+  width: 100%;
   border-radius: 5px;
   box-shadow: 0 0 2px 0 rgba(0,0,0,0.2);
   cursor: pointer;
@@ -44,7 +45,7 @@
 .sc-message-list {
   height: 80%;
   overflow-y: auto;
-  background-color: white;
+  background-color: #f7f7f7;
   background-size: 100%;
   padding: 40px 0px;
   scroll-behavior: smooth;
@@ -72,4 +73,19 @@
   .sc-chat-window.closed {
     bottom: 0px;
   }
+}
+
+.sc-chat-empty-img {
+  width: 75px;
+  height: 75px;
+  position: relative;
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.sc-chat-empty-msg {
+  margin: 0px 30px;
+  text-align: center;
+  color: #b3b3b3;
 }

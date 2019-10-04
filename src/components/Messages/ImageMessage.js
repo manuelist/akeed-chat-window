@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ImgsViewer from "react-images-viewer";
 
+import Image from './ImageViewer';
+
 const dummyImage =
   "https://cdn.atulhost.com/wp-content/uploads/2019/06/anime-wallpaper-01.jpg";
 
@@ -15,7 +17,7 @@ const ImageMessage = props => {
         role="button"
         tabIndex="-1"
       >
-        <img src={dummyImage} />
+        <img src={thumbnail} />
       </div>
     );
   };
@@ -23,16 +25,7 @@ const ImageMessage = props => {
   return (
     <div className="sc-message--image">
       {renderImageView()}
-      <ImgsViewer
-        imgs={[
-          {
-            src: dummyImage
-          }
-        ]}
-        onClose={() => setOpen(false)}
-        currImg={0}
-        isOpen={isOpen}
-      />
+      <Image isOpen={isOpen} imageUrl={imageUrl} setOpen={setOpen} />
     </div>
   );
 };

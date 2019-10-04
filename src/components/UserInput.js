@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useState, useRef } from "react";
-import SendIcon from "./icons/SendIcon";
-import FileIcon from "./icons/FileIcon";
+
+import image from '../assets/image.svg';
+import send from '../assets/send.svg';
 
 const UserInput = props => {
   const userInput = useRef(null);
@@ -51,13 +52,13 @@ const UserInput = props => {
     if (state.inputHasText) {
       return (
         <div className="sc-user-input--button">
-          <SendIcon onClick={_submitText} />
+          <img src={send} onClick={_submitText} />
         </div>
       );
     }
     return (
       <div className="sc-user-input--button">
-        <FileIcon onClick={_showFilePicker} />
+        <img src={image} onClick={_showFilePicker} />
         <input
           type="file"
           name="files[]"
@@ -84,7 +85,7 @@ const UserInput = props => {
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
         contentEditable="true"
-        placeholder="Write a reply..."
+        placeholder="Write Message"
         className="sc-user-input--text"
       />
       <div className="sc-user-input--buttons">

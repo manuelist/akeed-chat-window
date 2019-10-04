@@ -6,10 +6,16 @@ import Header from './Header';
 import UserInput from './UserInput';
 
 import loopLoader from '../assets/rolling.svg';
+import chatEmpty from '../assets/chat-empty.svg';
+import loader from '../assets/loop-loader.gif';
+
+const defaultMessage = "FlyAkeed customer service representative will be happy to help you with anything you need";
 
 const ChatWindow = (props) => {
-  let messageList = props.messageList || [];
-  let classList = [
+  const messageList = props.messageList || [];
+  const emptyMessage = props.emptyMessage || defaultMessage;
+  console.log(loader);
+  const classList = [
     'sc-chat-window',
     (props.isOpen ? 'opened' : 'closed')
   ];
@@ -32,6 +38,16 @@ const ChatWindow = (props) => {
       {
         !props.isConnected && (
           <img src={loopLoader} className="sc-loader-icon" />
+        )
+      }
+      {
+        messageList.length === 0 && (
+          <div>
+            <div className="sc-chat-empty-img-con">
+              <img src={chatEmpty} className="sc-chat-empty-img" />
+              <p className="sc-chat-empty-msg">{emptyMessage}</p>
+            </div>
+          </div>
         )
       }
       <MessageList

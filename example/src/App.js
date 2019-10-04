@@ -10,8 +10,6 @@ import "./assets/styles";
 
 const endpoint = "https://staging.flyakeed.com:3030";
 const dummyToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJiMWYzY2JmOTIyZDE5YjQ4MTEyMGI4NmQ1OWM2ZWNhYjQ3YWEwYzZhYmQyY2M0ZTk5OWQyODMxNTk5YjRlOTViYzQ5Nzg3ZDJkYjA2YzM1Nzg0NmM3ZTU2NWM4MDg0MzE3YTM4ODVlOGY2NWMxMTFmYWY5NWUwN2NkYmEwNzJmZmFhNzM5MTIwZTRmMiIsImlhdCI6MTU3MDEwMzQ0OH0.crcfMGEWtxaX-AWB3LwJ7J66Q9BTCU12folaMSCupYY";
-const imageToken = "OkOFL3HoCOepVCHBTVHq15k4MGsQe3gZymxRB7LamhYJcnsXzKM4AkPJaG_5pHbGnF29UlXsGDguYg_dR-WM2A";
-
 const App = () => {
   const [socket, setSocket] = useState(null);
   const [isOpen, setOpen] = useState(false);
@@ -69,12 +67,16 @@ const App = () => {
   };
 
   const pushMessage = (data) => {
-    const { type, sender, message } = data;
+    const { type, sender, message, thumbnail } = data;
     const messageData = {
-      type: type,
+      type,
       author: sender.type === "corp_admin" ? "me" : "them",
-      data: { text: message }
-    };
+      data: {
+        text: message,
+        imageUrl: `${endpoint}/api/corp${message}?token=${dummyToken}`,
+        thumbnail: `${endpoint}/api/corp${thumbnail}?token=${dummyToken}`
+      }
+    }
     setMessage(preMessages => ([
       ...preMessages,
       messageData
@@ -90,8 +92,8 @@ const App = () => {
         author: sender.type === "corp_admin" ? "me" : "them",
         data: {
           text: message,
-          imageUrl: `${endpoint}/api${message}?token=${imageToken}`,
-          thumbnail: `${endpoint}/api${thumbnail}?token=${imageToken}`
+          imageUrl: `${endpoint}/api/corp${message}?token=${dummyToken}`,
+          thumbnail: `${endpoint}/api/corp${thumbnail}?token=${dummyToken}`
         }
       });
     })

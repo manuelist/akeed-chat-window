@@ -4,7 +4,7 @@
   position: relative;
   bottom: 0;
   display: flex;
-  background-color: #f4f7f9;
+  background-color: #ffffff;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   transition: background-color .2s ease,box-shadow .2s ease;
@@ -65,6 +65,10 @@
   cursor: pointer;
 }
 
+.sc-user-input--button img {
+  cursor: pointer;
+}
+
 .sc-user-input--buttons input[type="file"] {
   display: none;
 }
@@ -99,7 +103,6 @@
   fill: rgba(86, 88, 103, 1);
 }
 
-.sc-user-input--emoji-icon-wrapper,
 .sc-user-input--send-icon-wrapper,
 .sc-user-input--file-icon-wrapper {
   background: none;
@@ -114,27 +117,4 @@
 .sc-user-input--send-icon-wrapper,
 .sc-user-input--file-icon-wrapper {
   flex-direction: row;
-}
-
-.sc-user-input--emoji-icon-wrapper:focus {
-  outline: none;
-}
-
-.sc-user-input--emoji-icon {
-  height: 18px;
-  cursor: pointer;
-  align-self: center;
-}
-
-.sc-user-input--emoji-icon path, .sc-user-input--emoji-icon circle {
-  fill: rgba(86, 88, 103, 0.3);
-}
-
-.sc-user-input--emoji-icon-wrapper:focus .sc-user-input--emoji-icon path,
-.sc-user-input--emoji-icon-wrapper:focus .sc-user-input--emoji-icon circle,
-.sc-user-input--emoji-icon.active path,
-.sc-user-input--emoji-icon.active circle,
-.sc-user-input--emoji-icon:hover path,
-.sc-user-input--emoji-icon:hover circle {
-  fill: rgba(86, 88, 103, 1);
 }
