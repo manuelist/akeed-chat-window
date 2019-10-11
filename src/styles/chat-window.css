@@ -33,7 +33,8 @@
 }
 
 .sc-loader-icon {
-  margin-top: 10px;
+  padding-top: 10px;
+  background: #f7f7f7;
 }
 
 .sc-chat-window.closed {
@@ -88,4 +89,40 @@
   margin: 0px 30px;
   text-align: center;
   color: #b3b3b3;
+}
+
+.sc-chat-empty-img-con {
+  background-color: #f7f7f7;
+}
+
+.sc-timestamp {
+  position: absolute;
+  background: #272727;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  display: none;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+}
+
+.sc-timestamp:after {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-top-color: #272727;
+  border-width: 5px;
+  margin-left: -5px;
+}
+
+.sc-message--text:hover .sc-timestamp {
+  display: inline-block;
 }

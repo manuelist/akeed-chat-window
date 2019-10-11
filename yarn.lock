@@ -7121,13 +7121,6 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-linkify-it@^2.0.3:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
-  integrity sha512-GnAl/knGn+i1U/wjBz3akz2stz+HrHLsxMwHQGofCDfPvlf+gDKN58UtfmUquTY4/MXeE2x7k19KQmeoZi94Iw==
-  dependencies:
-    uc.micro "^1.0.1"
-
 load-json-file@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-2.0.0.tgz#7947e42149af80d696cbf797bcaabcfe1fe29ca8"
@@ -9672,14 +9665,6 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.1.tgz#0612786bf19df406502d935494f0450b40b8294f"
   integrity sha512-BXUMf9sIOPXXZWqr7+c5SeOKJykyVr2u0UDzEf4LNGc6taGkQe1A9DFD07umCIXz45RLr9oAAwZbAJ0Pkknfaw==
 
-react-linkify@^1.0.0-alpha:
-  version "1.0.0-alpha"
-  resolved "https://registry.yarnpkg.com/react-linkify/-/react-linkify-1.0.0-alpha.tgz#b391c7b88e3443752fafe76a95ca4434e82e70d5"
-  integrity sha512-7gcIUvJkAXXttt1fmBK9cwn+1jTa4hbKLGCZ9J1U6EOkyb2/+LKL1Z28d9rtDLMnpvImlNlLPdTPooorl5cpmg==
-  dependencies:
-    linkify-it "^2.0.3"
-    tlds "^1.199.0"
-
 react-scripts@^3.1.2:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-3.2.0.tgz#58ccd6b4ffa27f1b4d2986cbdcaa916660e9e33c"
@@ -11170,11 +11155,6 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tlds@^1.199.0:
-  version "1.203.1"
-  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.203.1.tgz#4dc9b02f53de3315bc98b80665e13de3edfc1dfc"
-  integrity sha512-7MUlYyGJ6rSitEZ3r1Q1QNV8uSIzapS8SmmhSusBuIc7uIxPPwsKllEP0GRp1NS6Ik6F+fRZvnjDWm3ecv2hDw==
-
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -11339,11 +11319,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-uc.micro@^1.0.1:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
-  integrity sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==
 
 uglify-js@3.4.x:
   version "3.4.10"

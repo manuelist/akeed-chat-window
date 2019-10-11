@@ -1,11 +1,12 @@
-import React from 'react';
-import Linkify from 'react-linkify';
+import React from "react";
 
-
-const TextMessage = (props) => {
-  return <div className="sc-message--text">{
-    <Linkify properties={{ target: '_blank' }}>{props.data.text}</Linkify>
-  }</div>;
+const TextMessage = props => {
+  return (
+    <div className="sc-message--text" data-id={props.id}>
+      <span>{props.data.text}</span>
+      <span className="sc-timestamp">{props.dateCreated}</span>
+    </div>
+  );
 };
 
 export default TextMessage;

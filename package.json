@@ -58,9 +58,7 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "react-linkify": "^1.0.0-alpha"
-  },
+  "dependencies": {},
   "publishConfig": {
     "access": "public"
   }

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import ImgsViewer from "react-images-viewer";
-
 import Image from './ImageViewer';
 
 const dummyImage =

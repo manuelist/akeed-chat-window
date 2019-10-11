@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AkeedCare } from "akeed-care";
 import _ from 'lodash';
+import moment from 'moment';
 import socketIOClient from "socket.io-client";
 import TestArea from "./TestArea";
 import Header from "./Header";
@@ -14,14 +15,22 @@ const App = () => {
   const [socket, setSocket] = useState(null);
   const [isOpen, setOpen] = useState(false);
   const [messageList, setMessage] = useState([]);
+  const [pageOffset, setOffset] = useState(0);
   const [state, setState] = useState({
     newMessagesCount: 0,
-    isConnected: false
+    isConnected: false,
+    offset: 0
   });
 
   useEffect(() => {
     initSocket();
   }, []);
+
+  useEffect(() => {
+    if (messageList.length) {
+      fetchMessages(pageOffset);
+    }
+  }, [pageOffset]);
 
   const initSocket = () => {
     const socket = socketIOClient(endpoint);
@@ -38,9 +47,13 @@ const App = () => {
     );
   };
 
-  const fetchPreviousMessages = async () => {
+  const fetchPreviousMessages = () => {
+    fetchMessages(0);
+  };
+
+  const fetchMessages = async (offset) => {
     try {
-      const response = await fetch(`${endpoint}/api/messages/corp?offset=0`, {
+      const response = await fetch(`${endpoint}/api/messages/corp?offset=${pageOffset}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -51,13 +64,17 @@ const App = () => {
       const { error, data } = json;
       const list = error ? [] : arrangeMessage(data.messages);
       setState({ ...state, isConnected: true });
-      setMessage(list);
+      setMessage(prevMsg => {
+        return [...list, ...prevMsg];
+      });
     } catch (error) {
-      setMessage([]);
+      setMessage(prevMsg => {
+        return [...prevMsg, ...[]];
+      });
       setState({ ...state, isConnected: true });
       console.error("Error:", error);
     }
-  };
+  }
 
   const initMessageReceived = (socketParams) => {
     socketParams.on("chat_message", data => {
@@ -71,6 +88,8 @@ const App = () => {
     const messageData = {
       type,
       author: sender.type === "corp_admin" ? "me" : "them",
+      dateCreated: moment(data.date_created).format('YYYY-MM-DD hh:mm'),
+      id: data._id,
       data: {
         text: message,
         imageUrl: `${endpoint}/api/corp${message}?token=${dummyToken}`,
@@ -90,6 +109,8 @@ const App = () => {
       data.push({
         type,
         author: sender.type === "corp_admin" ? "me" : "them",
+        id: prop._id,
+        dateCreated: moment(prop.date_created).format('YYYY-MM-DD hh:mm'),
         data: {
           text: message,
           imageUrl: `${endpoint}/api/corp${message}?token=${dummyToken}`,
@@ -101,7 +122,7 @@ const App = () => {
     return data;
   }
 
-  const _onMessageWasSent = message => {
+  const onMessageWasSent = message => {
     const {
       data: { text }
     } = message;
@@ -131,10 +152,20 @@ const App = () => {
     });
   };
 
-  const _handleClick = () => {
+  const onfetchNewData = () => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        isConnected: false
+      };
+    });
+    setOffset(pageOffset + 15);
+  }
+
+  const handleClick = () => {
     setOpen(!isOpen);
   };
-  console.log(isOpen);
+
   return (
     <div>
       <Header />
@@ -145,11 +176,12 @@ const App = () => {
           imageUrl:
             "https://dsx9kbtamfpyb.cloudfront.net/desktop-web/build/images/logo/logo-icon-colored.png"
         }}
-        onMessageWasSent={_onMessageWasSent}
+        onMessageWasSent={onMessageWasSent}
         onFilesSelected={_onFilesSelected}
         messageList={messageList}
         newMessagesCount={state.newMessagesCount}
-        handleClick={_handleClick}
+        onfetchNewData={onfetchNewData}
+        handleClick={handleClick}
         isOpen={isOpen}
         isConnected={state.isConnected}
       />

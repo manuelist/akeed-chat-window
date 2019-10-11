@@ -14,7 +14,6 @@ const defaultMessage = "FlyAkeed customer service representative will be happy t
 const ChatWindow = (props) => {
   const messageList = props.messageList || [];
   const emptyMessage = props.emptyMessage || defaultMessage;
-  console.log(loader);
   const classList = [
     'sc-chat-window',
     (props.isOpen ? 'opened' : 'closed')
@@ -34,6 +33,7 @@ const ChatWindow = (props) => {
         teamName={props.agentProfile.teamName}
         imageUrl={props.agentProfile.imageUrl}
         onClose={props.onClose}
+        {...props}
       />
       {
         !props.isConnected && (
@@ -53,10 +53,12 @@ const ChatWindow = (props) => {
       <MessageList
         messages={messageList}
         imageUrl={props.agentProfile.imageUrl}
+        {...props}
       />
       <UserInput
         onSubmit={onUserInputSubmit}
         onFilesSelected={onFilesSelected}
+        {...props}
       />
     </div>
   );
