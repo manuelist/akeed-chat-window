@@ -4,6 +4,7 @@
   bottom: 25px;
   box-shadow: none;
   transition: box-shadow 0.2s ease-in-out;
+  z-index: 9999;
 }
 
 .sc-chat-button {

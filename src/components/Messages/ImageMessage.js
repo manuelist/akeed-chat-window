@@ -7,7 +7,6 @@ const dummyImage =
 
 const ImageMessage = props => {
   const { imageUrl, thumbnail, text } = props.data;
-  console.log(text);
   const [isOpen, setOpen] = useState(false);
   const imageClass = text === "sc-temp-image" ? "sc-img-upload sc-opacity" : "sc-img-upload"
   const renderImageView = () => {
