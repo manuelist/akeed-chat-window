@@ -7,6 +7,7 @@ import TestArea from "./TestArea";
 import Header from "./Header";
 import Footer from "./Footer";
 import logoURL from "./assets/img/logo@2x.png";
+import loaderImg from "./assets/img/loop-loader.gif";
 import "./assets/styles";
 
 const endpoint = "https://staging.flyakeed.com:3030";
@@ -53,7 +54,7 @@ const App = () => {
 
   const fetchMessages = async (offset) => {
     try {
-      const response = await fetch(`${endpoint}/api/messages/corp?offset=${pageOffset}`, {
+      const response = await fetch(`${endpoint}/api/messages/corp?offset=${pageOffset}&sort=desc`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -136,20 +137,43 @@ const App = () => {
 
   const _onFilesSelected = fileList => {
     const objectURL = window.URL.createObjectURL(fileList[0]);
-    setState({
-      ...state,
-      messageList: [
-        ...state.messageList,
-        {
-          type: "file",
-          author: "me",
-          data: {
-            url: objectURL,
-            fileName: fileList[0].name
-          }
-        }
-      ]
-    });
+    const messageData = {
+      type: "image",
+      author: "me",
+      id: "",
+      dateCreated: moment().format('YYYY-MM-DD hh:mm'),
+      data: {
+        text: 'sc-temp-image',
+        imageUrl: objectURL,
+        thumbnail: objectURL
+      }
+    }
+
+    setMessage(preMessages => ([
+      ...preMessages,
+      messageData
+    ]));
+
+    uploadFile(fileList);
+  };
+
+  const uploadFile = async fileList => {
+    const file = fileList[0];
+    const formData = new FormData();
+    formData.append("attachment", file);
+    try {
+      await fetch(`${endpoint}/api/message/corp`, {
+        method: "POST",
+        headers: {
+          authorize: dummyToken
+        },
+        body: formData
+      });
+      const list = _.filter(messageList, o => o.data.text !== "sc-temp-image");
+      setMessage(list);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onfetchNewData = () => {
@@ -174,7 +198,7 @@ const App = () => {
         agentProfile={{
           teamName: "AkeedCare",
           imageUrl:
-            "https://dsx9kbtamfpyb.cloudfront.net/desktop-web/build/images/logo/logo-icon-colored.png"
+            "https://dsx9kbtamfpyb.cloudfront.net/desktop-web/build/images/logo/logo-icon-colored.png",
         }}
         onMessageWasSent={onMessageWasSent}
         onFilesSelected={_onFilesSelected}

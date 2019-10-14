@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Message from "./Messages";
 
-const MessageList = (props) => {
+const MessageList = props => {
   const scrollList = useRef(null);
   const [isFetch, setFetch] = useState(false);
 
@@ -56,10 +56,29 @@ const MessageList = (props) => {
     };
   });
 
+  const getTime = (msg, nextMsg) => {
+    try {
+      if (nextMsg) {
+        if (msg.dateCreated !== nextMsg.dateCreated) {
+          return msg.dateCreated;
+        }
+      } else {
+        return msg.dateCreated;
+      }
+    } catch (error) {
+      return '';
+    }
+  }
+
   return (
     <div className="sc-message-list" ref={scrollList}>
       {props.messages.map((message, i) => {
-        return <Message message={message} key={i} />;
+        return (
+          <React.Fragment key={i}>
+            <Message message={message} key={i} />
+            { message.author === "me" && (<span className="sc-time-created">{getTime(message, props.messages[i + 1])}</span>) }
+          </React.Fragment>
+        );
       })}
     </div>
   );

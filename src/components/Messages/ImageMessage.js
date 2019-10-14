@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import Image from './ImageViewer';
+import Image from "./ImageViewer";
 
+import loopLoader from "../../assets/rolling.svg";
 const dummyImage =
   "https://cdn.atulhost.com/wp-content/uploads/2019/06/anime-wallpaper-01.jpg";
 
 const ImageMessage = props => {
-  const { imageUrl, thumbnail } = props.data;
+  const { imageUrl, thumbnail, text } = props.data;
+  console.log(text);
   const [isOpen, setOpen] = useState(false);
+  const imageClass = text === "sc-temp-image" ? "sc-img-upload sc-opacity" : "sc-img-upload"
   const renderImageView = () => {
     return (
       <div
@@ -15,7 +18,10 @@ const ImageMessage = props => {
         role="button"
         tabIndex="-1"
       >
-        <img src={thumbnail} />
+        <div className="sc-upload-loader">
+          {text === "sc-temp-image" ? <img src={loopLoader} className="sc-img-uploading" /> : null}
+          <img src={thumbnail} className={imageClass} />
+        </div>
       </div>
     );
   };

@@ -17,8 +17,23 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.sc-message--thumbnail img {
-  width: 100%;
+.sc-loader-con,
+.sc-loader-con-svg {
+  background: #f7f7f7;
+  display: flex;
+  justify-content: center;
+}
+
+.sc-loader-con img {
+  width: 70px;
+}
+
+.sc-loader-con-svg img {
+  width: 40x;
+}
+
+.sc-message--thumbnail .sc-img-upload {
+  max-width: 150px;
   border-radius: 5px;
   box-shadow: 0 0 2px 0 rgba(0,0,0,0.2);
   cursor: pointer;

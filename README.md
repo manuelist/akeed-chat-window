@@ -4,8 +4,8 @@ Chat Window Component for FlyAkeed
 ## Installation
 
 ```
-$ npm install akeed-care
-$ yarn add akeed-care
+$ npm install @flyakeed/akeed-chat-window
+$ yarn add @flyakeed/akeed-chat-window
 ```
 
 ## Example
@@ -137,15 +137,4 @@ Message objects are rendered differently depending on their type. Currently, onl
   }
 }
 
-```
-
-### Agent Profile Objects
-
-Look like this:
-
-```js
-{
-  imageUrl: 'https://somewhere.on/the_web.png',
-  teamName: 'Da best'
-}
 ```
