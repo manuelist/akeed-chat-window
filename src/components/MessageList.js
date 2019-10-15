@@ -6,14 +6,18 @@ const MessageList = props => {
   const [isFetch, setFetch] = useState(false);
 
   useEffect(() => {
-    if (props.messages.length) {
-      if (isFetch) {
-        const first = scrollList.current.children[14];
-        first.scrollIntoView();
-        setFetch(false);
-      } else {
-        scrollToBottom();
+    try {
+      if (props.messages.length) {
+        if (isFetch) {
+          const first = scrollList.current.children[14];
+          first.scrollIntoView();
+          setFetch(false);
+        } else {
+          scrollToBottom();
+        }
       }
+    } catch (error) {
+      // scrollToBottom();
     }
   }, [props.messages]);
 
