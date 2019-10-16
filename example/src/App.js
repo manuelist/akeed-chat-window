@@ -11,7 +11,7 @@ import loaderImg from "./assets/img/loop-loader.gif";
 import "./assets/styles";
 
 const endpoint = "https://staging.flyakeed.com:3030";
-const dummyToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJiMWYzY2JmOTIyZDE5YjQ4MTEyMGI4NmQ1OWM2ZWNhYjQ3YWEwYzZhYmQyY2M0ZTk5OWQyODMxNTk5YjRlOTViYzQ5Nzg3ZDJkYjA2YzM1Nzg0NmM3ZTU2NWM4MDg0MzE3YTM4ODVlOGY2NWMxMTFmYWY5NWUwN2NkYmEwNzJmZmFhNzM5MTIwZTRmMiIsImlhdCI6MTU3MDEwMzQ0OH0.crcfMGEWtxaX-AWB3LwJ7J66Q9BTCU12folaMSCupYY";
+const dummyToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzOTE5ODMyYjM5YzgwMTJiMDA5NTA3YWIxMGFjY2Y0OTQxMDU1NDYxYzQ3NjhiNDEzOGY2MDg3MzBlNzJjZmI0MjY3OGZjN2Q0MGQyMTJlNWY5MjYzOWMwNTQ2NjVjYzNmNjQxMjBkZjg0YjIxZjc2ZmQ3YzY0NmQ5Njk0OWEzMmI1ZWIxNmY5ZDRmYyIsImlhdCI6MTU3MTIxODUxNH0.j-GXx4F0QTw1PYW0jTtB43KrZlW0gipUhsLkyDgxoI0";
 const App = () => {
   const [socket, setSocket] = useState(null);
   const [isOpen, setOpen] = useState(false);
@@ -105,7 +105,7 @@ const App = () => {
 
   const arrangeMessage = (list) => {
     const data = [];
-    _.forEach(list, (prop) => {
+    _.forEachRight(list, (prop) => {
       const { type, sender, message, thumbnail } = prop;
       data.push({
         type,
