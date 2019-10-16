@@ -201,3 +201,14 @@
 .sc-opacity {
   opacity: 0.7;
 }
+
+.sc-message-list::-webkit-scrollbar {
+  width: 10px;
+}
+.sc-message-list::-webkit-scrollbar-track {
+  background-color: #e3e3e3;
+}
+.sc-message-list::-webkit-scrollbar-thumb {
+  background-color: #38bca8;
+  border-radius: 50px;
+}
