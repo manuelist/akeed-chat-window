@@ -30,7 +30,7 @@
   overflow: scroll;
   bottom: 0;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .sc-user-input--text:empty:before {
