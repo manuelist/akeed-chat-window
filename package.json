@@ -1,6 +1,6 @@
 {
-  "name": "@flyakeed/akeed-chat-window",
-  "version": "1.5.0",
+  "name": "akeed-care-chat-window",
+  "version": "1.0.0",
   "description": "Chat Window Component",
   "author": "manuelist",
   "license": "MIT",
