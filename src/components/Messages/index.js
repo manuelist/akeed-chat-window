@@ -5,14 +5,14 @@ import FileMessage from "./FileMessage";
 import ImageMessage from "./ImageMessage";
 import TextNode from "./TextNode";
 
-const Message = (props) => {
-  const { message } = props;
+const Message = props => {
+  const { message, sender } = props;
   let contentClassList = [
     "sc-message--content",
-    message.author === "me" ? "sent" : "received",
+    message.author === "me" ? "sent" : "received"
   ];
 
-  const _renderMessageOfType = (type) => {
+  const _renderMessageOfType = type => {
     switch (type) {
       case "text":
         return <TextMessage {...message} />;
@@ -32,11 +32,23 @@ const Message = (props) => {
   };
 
   return (
-    <div className="sc-message">
-      <div className={contentClassList.join(" ")}>
-        {_renderMessageOfType(message.type)}
+    <React.Fragment>
+      {message.author === "me" ? null : (
+        <div className="agent-name-container">
+          <span className="sc-message--text-agent-name">
+            {message.sender.first_name}
+          </span>{" "}
+          <span className="sc-message--text-agent-name sc-message--text-agent-lname">
+            {message.sender.last_name}
+          </span>
+        </div>
+      )}
+      <div className="sc-message">
+        <div className={contentClassList.join(" ")}>
+          {_renderMessageOfType(message.type)}
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

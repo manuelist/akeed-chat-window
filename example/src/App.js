@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AkeedCare } from "akeed-care";
-import _ from 'lodash';
-import moment from 'moment';
+import _ from "lodash";
+import moment from "moment";
 import socketIOClient from "socket.io-client";
 import TestArea from "./TestArea";
 import Header from "./Header";
@@ -11,7 +11,8 @@ import loaderImg from "./assets/img/loop-loader.gif";
 import "./assets/styles";
 
 const endpoint = "https://staging.flyakeed.com:3030";
-const dummyToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIzOTE5ODMyYjM5YzgwMTJiMDA5NTA3YWIxMGFjY2Y0OTQxMDU1NDYxYzQ3NjhiNDEzOGY2MDg3MzBlNzJjZmI0MjY3OGZjN2Q0MGQyMTJlNWY5MjYzOWMwNTQ2NjVjYzNmNjQxMjBkZjg0YjIxZjc2ZmQ3YzY0NmQ5Njk0OWEzMmI1ZWIxNmY5ZDRmYyIsImlhdCI6MTU3MTIxODUxNH0.j-GXx4F0QTw1PYW0jTtB43KrZlW0gipUhsLkyDgxoI0";
+const dummyToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTZjZDNiMjgyZGE5NTUzYzkxNWYyNTVjNDMxYThhZjE3NWY2YTkzYzA2ZTM4ODEyMzU0NjBiYzNmMzZlMWI1YjAyNTI2NzJmYTA1YTdkNGU4MWMyZWQwMzBkM2RiN2YyODUzNGY0MDVlZTM5NDYzNzNjY2M4YzNlNzM1ZDllZGNlNzYxZWUwNWU5MCIsImlhdCI6MTY4NTQzOTg5Mn0.p4jt-txx1hoUS4twUWVMt_xrQPmKzP8Gwjuzz4W5clA";
 const App = () => {
   const [socket, setSocket] = useState(null);
   const [isOpen, setOpen] = useState(false);
@@ -52,15 +53,18 @@ const App = () => {
     fetchMessages(0);
   };
 
-  const fetchMessages = async (offset) => {
+  const fetchMessages = async offset => {
     try {
-      const response = await fetch(`${endpoint}/api/messages/corp?offset=${pageOffset}&sort=desc`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorize: dummyToken
+      const response = await fetch(
+        `${endpoint}/api/messages/corp?offset=${pageOffset}&sort=desc`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorize: dummyToken
+          }
         }
-      });
+      );
       const json = await response.json();
       const { error, data } = json;
       const list = error ? [] : arrangeMessage(data.messages);
@@ -75,53 +79,52 @@ const App = () => {
       setState({ ...state, isConnected: true });
       console.error("Error:", error);
     }
-  }
+  };
 
-  const initMessageReceived = (socketParams) => {
+  const initMessageReceived = socketParams => {
     socketParams.on("chat_message", data => {
       console.log(data);
       pushMessage(data);
     });
   };
 
-  const pushMessage = (data) => {
+  const pushMessage = data => {
     const { type, sender, message, thumbnail } = data;
     const messageData = {
       type,
       author: sender.type === "corp_admin" ? "me" : "them",
-      dateCreated: moment(data.date_created).format('YYYY-MM-DD hh:mm'),
+      sender,
+      dateCreated: moment(data.date_created).format("YYYY-MM-DD hh:mm"),
       id: data._id,
       data: {
         text: message,
         imageUrl: `${endpoint}/api/corp${message}?token=${dummyToken}`,
         thumbnail: `${endpoint}/api/corp${thumbnail}?token=${dummyToken}`
       }
-    }
-    setMessage(preMessages => ([
-      ...preMessages,
-      messageData
-    ]));
+    };
+    setMessage(preMessages => [...preMessages, messageData]);
   };
 
-  const arrangeMessage = (list) => {
+  const arrangeMessage = list => {
     const data = [];
-    _.forEachRight(list, (prop) => {
+    _.forEachRight(list, prop => {
       const { type, sender, message, thumbnail } = prop;
       data.push({
         type,
         author: sender.type === "corp_admin" ? "me" : "them",
+        sender,
         id: prop._id,
-        dateCreated: moment(prop.date_created).format('YYYY-MM-DD hh:mm'),
+        dateCreated: moment(prop.date_created).format("YYYY-MM-DD hh:mm"),
         data: {
           text: message,
           imageUrl: `${endpoint}/api/corp${message}?token=${dummyToken}`,
           thumbnail: `${endpoint}/api/corp${thumbnail}?token=${dummyToken}`
         }
       });
-    })
+    });
 
     return data;
-  }
+  };
 
   const onMessageWasSent = message => {
     const {
@@ -141,18 +144,15 @@ const App = () => {
       type: "image",
       author: "me",
       id: "",
-      dateCreated: moment().format('YYYY-MM-DD hh:mm'),
+      dateCreated: moment().format("YYYY-MM-DD hh:mm"),
       data: {
-        text: 'sc-temp-image',
+        text: "sc-temp-image",
         imageUrl: objectURL,
         thumbnail: objectURL
       }
-    }
+    };
 
-    setMessage(preMessages => ([
-      ...preMessages,
-      messageData
-    ]));
+    setMessage(preMessages => [...preMessages, messageData]);
 
     uploadFile(fileList);
   };
@@ -177,14 +177,14 @@ const App = () => {
   };
 
   const onfetchNewData = () => {
-    setState((prevState) => {
+    setState(prevState => {
       return {
         ...prevState,
         isConnected: false
       };
     });
     setOffset(pageOffset + 15);
-  }
+  };
 
   const handleClick = () => {
     setOpen(!isOpen);
@@ -198,7 +198,7 @@ const App = () => {
         agentProfile={{
           teamName: "AkeedCare",
           imageUrl:
-            "https://dsx9kbtamfpyb.cloudfront.net/desktop-web/build/images/logo/logo-icon-colored.png",
+            "https://dsx9kbtamfpyb.cloudfront.net/desktop-web/build/images/logo/logo-icon-colored.png"
         }}
         onMessageWasSent={onMessageWasSent}
         onFilesSelected={_onFilesSelected}
